@@ -6,8 +6,6 @@ export const register = async (req, res) => {
     const { fullname, email, phoneNumber, password, role } = req.body;
     const file = req.file; 
 
-    console.log(fullname, email, phoneNumber, password, role, file);
-
     if (!fullname || !email || !phoneNumber || !password || !role || !file) {
       return res.status(400).json({
         message: "Something is missing",
@@ -116,7 +114,7 @@ export const logout=async (req,res)=>{
         console.log(error);
     }
 }
-/*export const updateProfile=async(req,res)=>{
+export const updateProfile=async(req,res)=>{
     try{
         const {fullname,email,phoneNumber,bio,skills}=req.body;
         const file=req.file;
@@ -150,8 +148,25 @@ export const logout=async (req,res)=>{
         await user.save();
         user={
             _id:user._id,
+            fullname:user.fullname,
+            email:user.email,
+            phoneNumber:user.phoneNumber,
+            role:user.role,
+            profile:user.profile
         }
-    }*/
+        return res.status(200).json({
+            message:"Profile updated successfully.",
+            user,
+            success:true
+        });
+    }catch(error){
+        console.log(error);
+        return res.status(500).json({
+            message:"Server error",
+            success:false
+        });
+    }
+}
 
 
 
