@@ -28,13 +28,10 @@ file: {
     size: { type: Number, required: true },
     encoding:{type:String},
     buffer:{type:Buffer}
-  }
-    },
-   /* profile:{
+  },
+    profile:{
         bio:{type:String},
-        skills:{
-            type:[String]
-        },
+        skills:[String],
         resume:{type:String}, //URL to resume file
         resumeOriginalName:{type:String},
         company:{type:mongoose.Schema.Types.ObjectId,  ref:'Company'},
@@ -42,6 +39,7 @@ file: {
             type:String,
             default:""
         }
-    },*/
+    }
+    },
 {timestamps:true});
 export const User=mongoose.model('User',userSchema);

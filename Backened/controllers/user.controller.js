@@ -134,6 +134,12 @@ export const updateProfile=async(req,res)=>{
                 success:false
             })
         }
+        
+        // Initialize profile if it doesn't exist
+        if(!user.profile){
+            user.profile = {};
+        }
+        
         //updating data
         if(fullname)  user.fullname=fullname
         if(email)  user.email=email
