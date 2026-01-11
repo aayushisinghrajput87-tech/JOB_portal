@@ -7,13 +7,15 @@ import { Badge } from './ui/badge'
 import { Label } from './ui/label'
 import AppliedJobsTable from './AppliedJobsTable'
 import UpdateProfileDialog from './UpdateProfileDialog'
+import { useSelector } from 'react-redux'
 
 
 
-const skills = ["Html", "Css", "Javascript", "Reactjs"];
+//const skills = ["Html", "Css", "Javascript", "Reactjs"];
 const Profile = () => {
     const [open,setOpen]=useState(false);
     const [isResume, setIsResume] = useState(true);
+    const {user}=useSelector(store=>store.auth);
 
     return (
         <div className="bg-white min-h-screen">
@@ -35,9 +37,9 @@ const Profile = () => {
                             
                             <div>
                                 {/* Name Font adjusted to look closer to image */}
-                                <h1 className='font-bold text-2xl'>Full Name</h1>
+                                <h1 className='font-bold text-2xl'>{user?.fullname}</h1>
                                 <p className='text-gray-500 mt-1 max-w-md text-sm'>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure dignissimos reprehenderit ducimus.
+                                   {user?.profile?.bio}
                                 </p>
                             </div>
                         </div>
@@ -51,11 +53,11 @@ const Profile = () => {
                     <div className='my-6 space-y-3'>
                         <div className='flex items-center gap-3 text-gray-600 text-sm font-medium'>
                             <Mail className="h-4 w-4" />
-                            <span>aayushi123@gmail.com</span>
+                            <span>{user?.email}</span>
                         </div>
                         <div className='flex items-center gap-3 text-gray-600 text-sm font-medium'>
                             <Contact className="h-4 w-4" />
-                            <span>8967452365</span>
+                            <span>{user?.phoneNumber}</span>
                         </div>
                     </div>
 
@@ -63,7 +65,7 @@ const Profile = () => {
                         <h1 className='font-bold text-base mb-2'>Skills</h1>
                         <div className='flex items-center gap-2'>
                             {
-                                skills.length !== 0 ? skills.map((item, index) => (
+                                user?.profile?.skills.length !== 0 ? user?.profile?.skills.map((item, index) => (
                                     <Badge key={index} className="bg-black text-white hover:bg-gray-800 px-3 py-1 rounded-full text-sm font-normal">
                                         {item}
                                     </Badge>
@@ -77,7 +79,7 @@ const Profile = () => {
                         {
                             isResume ? (
                                 <a target='_blank' href='https://www.youtube.com/watch?v=9kuynHcM3UA' className='text-blue-600 w-full hover:underline cursor-pointer text-sm font-medium'>
-                                    Aayushi MERN Stack
+                                    {user?.profile?.resumeOriginalName}
                                 </a>
                             ) : <span>NA</span>
                         }
