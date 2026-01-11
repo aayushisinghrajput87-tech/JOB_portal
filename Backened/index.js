@@ -14,7 +14,6 @@ const corsOptions ={
     credentials:true,
 };
 app.use(cors(corsOptions));
-app.use("/api/application",applicationRoute);
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
