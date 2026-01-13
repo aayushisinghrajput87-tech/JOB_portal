@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
 import dotenv from "dotenv";
+
 dotenv.config();
 export const register = async (req, res) => {
   try {
@@ -15,7 +16,10 @@ export const register = async (req, res) => {
         message: "Something is missing",
         success: false,
       });
-    }
+    };
+    const fileUri=getDataUri(file);
+    const cloudResponse=await cloudinary.uploader.upload(fileUri.content);
+
 
     const user = await User.findOne({ email });
     if (user) {
@@ -35,6 +39,9 @@ export const register = async (req, res) => {
       phoneNumber,
       password: hashedPassword,
       role,
+      profile:{
+          profilePhoto:cloudResponse.secure_url,
+      },
       file: {
         originalName: file.originalname,
         mimeType: file.mimetype,
@@ -125,7 +132,10 @@ export const updateProfile=async(req,res)=>{
         const file=req.file;
         //cloudinary ayega idhar
         const fileUri=getDataUri(file);
-        const cloudResponse=await cloudinary.uploader.upload(fileUri.content);
+        const cloudResponse=await cloudinary.uploader.upload(fileUri.content,{
+            resource_type:"raw",
+            folder:"resumes"
+        });
 
         let skillsArray;
         if(skills){
