@@ -19,7 +19,7 @@ export const applyJob=async (req,res)=>{
             });
         }
         //check if the jobs exists
-        const job=await Job.findById(jobId);
+        const job=await job.findById(jobId);
         if(!job){
             return res.status(404).json({
                 message:"Job not found",
