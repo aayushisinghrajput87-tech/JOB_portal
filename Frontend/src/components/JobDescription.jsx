@@ -3,19 +3,22 @@ import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { useParams } from 'react-router-dom';
 //import useGetSingleJob from '@/hooks/useGetSingleJob';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import axios from 'axios';
 import { APPLICATION_API_END_POINT, JOB_API_END_POINT } from '@/utils/constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSingleJob } from '@/redux/jobSlice';
 import { toast } from 'sonner';
 
+
 const JobDescription = () => {
   const {singleJob}=useSelector(store=>store.job);
   const params=useParams();
   const jobId=params.id;
+  console.log(jobId,"jobId from params");
   const {user}=useSelector(store=>store.auth);
-  const isApplied =singleJob?.applications?.some(application=>application.applicant===user?._id) || false;
+  const isInitiallyApplied=singleJob?.applications?.some(application=>application.applicant===user?._id) || false;
+  const [isApplied,setIsApplied]=useState(isInitiallyApplied);
   const dispatch=useDispatch();
   const applyJobHandler=async()=>{
     try{
@@ -23,6 +26,9 @@ const JobDescription = () => {
       console.log(res.data);
       if(res.data.success){
         toast.success(res.data.message);
+        const updatedSingleJob={...singleJob,applications:[...singleJob.applications,{applicant:user?._id}]}
+        dispatch(setSingleJob(updatedSingleJob));  //helps us to real time UI update
+        setIsApplied(true);  //update the local state
       }
     }catch(error){
      console.log(error);
@@ -33,15 +39,18 @@ const JobDescription = () => {
    useEffect(()=>{
         const fetchSingleJob=async()=>{
             try{
-                console.log("Fetching jobs from:", `${JOB_API_END_POINT}/get`);
+                console.log("Fetching jobs from:", `${JOB_API_END_POINT}/get/${jobId}`);
                 const res=await axios.get(`${JOB_API_END_POINT}/get/${jobId}`,{withCredentials:true});
-                console.log("API Response:", res.data);
+                console.log("API Response of single job detail:", res.data);
                 if(res.data.success){
-                    console.log("Jobs fetched:", res.data.jobs);
+                    console.log("Job fetched:", res.data.job);
                     dispatch(setSingleJob(res.data.job));
+                    if(res.data.job?.applications && Array.isArray(res.data.job.applications)){
+                        setIsApplied(res.data.job.applications.some(application=>application.applicant===user?._id));
+                    }
                 }
             }catch(error){
-                console.error("Error fetching jobs:", error);
+                console.log(error);
             }
         }
         fetchSingleJob();

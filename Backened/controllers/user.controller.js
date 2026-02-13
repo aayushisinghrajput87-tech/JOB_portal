@@ -11,15 +11,18 @@ export const register = async (req, res) => {
     const { fullname, email, phoneNumber, password, role } = req.body;
     const file = req.file; 
 
-    if (!fullname || !email || !phoneNumber || !password || !role || !file) {
+    if (!fullname || !email || !phoneNumber || !password || !role) {
       return res.status(400).json({
         message: "Something is missing",
         success: false,
       });
     };
-    const fileUri=getDataUri(file);
-    const cloudResponse=await cloudinary.uploader.upload(fileUri.content);
-
+    
+    let cloudResponse = null;
+    if (file) {
+      const fileUri = getDataUri(file);
+      cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+    }
 
     const user = await User.findOne({ email });
     if (user) {
@@ -40,15 +43,17 @@ export const register = async (req, res) => {
       password: hashedPassword,
       role,
       profile:{
-          profilePhoto:cloudResponse.secure_url,
+          profilePhoto: cloudResponse?.secure_url || null,
       },
-      file: {
-        originalName: file.originalname,
-        mimeType: file.mimetype,
-        size: file.size,
-        encoding: file.encoding,
-        buffer: file.buffer
-      }
+      ...(file && {
+        file: {
+          originalName: file.originalname,
+          mimeType: file.mimetype,
+          size: file.size,
+          encoding: file.encoding,
+          buffer: file.buffer
+        }
+      })
     });
 
     return res.status(201).json({
