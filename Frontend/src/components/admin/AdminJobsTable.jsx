@@ -10,13 +10,14 @@ import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 
 
-const CompaniesTable = ({ buttonText = "New Company", buttonPath = "/admin/companies/create" }) => {
+const AdminJobsTable = ({ buttonText = "New Company", buttonPath = "/admin/companies/create" }) => {
     const { companies = [] } = useSelector(store => store.company);
+    const {allAdminJobs=[]}=useSelector(store=>store.job);
     const [filterText, setFilterText] = useState('');
     const navigate = useNavigate();
 
-    const filteredCompanies = companies.filter(company => 
-        company.name.toLowerCase().includes(filterText.toLowerCase())
+    const filteredCompanies = allAdminJobs.filter(job =>
+        job.title.toLowerCase().includes(filterText.toLowerCase())
     );
 
     return (
@@ -24,8 +25,8 @@ const CompaniesTable = ({ buttonText = "New Company", buttonPath = "/admin/compa
             {/* Header Section with Filter and Button */}
             <div className="flex justify-between items-center mb-6">
                 <div className="flex-1 max-w-xs">
-                    <Input 
-                        placeholder="Filter by name" 
+                    <Input
+                        placeholder="Filter by name"
                         value={filterText}
                         onChange={(e) => setFilterText(e.target.value)}
                         className="h-10 border-gray-300"
@@ -39,11 +40,11 @@ const CompaniesTable = ({ buttonText = "New Company", buttonPath = "/admin/compa
             {/* Table Container */}
             <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
                 <Table>
-                    <TableCaption className="py-3 text-gray-500 text-sm">A list of your recent registered companies</TableCaption>
+                    <TableCaption className="py-3 text-gray-500 text-sm">A list of your recent posted jobs</TableCaption>
                     <TableHeader className="bg-gray-50 border-b border-gray-200">
                         <TableRow className="hover:bg-gray-50">
-                            <TableHead className="w-1/5 px-6 py-4 text-left text-xs font-semibold text-gray-700">Logo</TableHead>
-                            <TableHead className="w-2/5 px-6 py-4 text-left text-xs font-semibold text-gray-700">Name</TableHead>
+                            <TableHead className="w-1/5 px-6 py-4 text-left text-xs font-semibold text-gray-700">Company Name</TableHead>
+                            <TableHead className="w-2/5 px-6 py-4 text-left text-xs font-semibold text-gray-700">Role</TableHead>
                             <TableHead className="w-1/5 px-6 py-4 text-left text-xs font-semibold text-gray-700">Date</TableHead>
                             <TableHead className="w-1/5 px-6 py-4 text-right text-xs font-semibold text-gray-700">Action</TableHead>
                         </TableRow>
@@ -52,20 +53,23 @@ const CompaniesTable = ({ buttonText = "New Company", buttonPath = "/admin/compa
                         {filteredCompanies.length <= 0 ? (
                             <TableRow className="hover:bg-gray-50">
                                 <TableCell colSpan="4" className="text-center py-12 text-red-500 text-sm">
-                                    You haven't registered any companies yet.
+                                    You haven't posted any jobs yet.
                                 </TableCell>
                             </TableRow>
                         ) : (
-                            filteredCompanies?.map((company) => (
-                                <TableRow key={company._id} className="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                                    <TableCell className="w-1/5 px-6 py-4">
+                            filteredCompanies?.map((job) => (
+                                <TableRow key={job._id} className="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                                    {/*<TableCell className="w-1/5 px-6 py-4">
                                         <img src={company.logo} alt={company.name} className="h-12 w-12 rounded-full object-cover" />
+                                    </TableCell> */}
+                                    <TableCell className="w-2/5 px-6 py-4 text-sm font-medium text-gray-900">
+                                        {job?.company?.name}
                                     </TableCell>
                                     <TableCell className="w-2/5 px-6 py-4 text-sm font-medium text-gray-900">
-                                        {company.name}
+                                        {job?.title}
                                     </TableCell>
                                     <TableCell className="w-1/5 px-6 py-4 text-sm text-gray-600">
-                                        {company.createdAt.split("T")[0]}
+                                        {job?.createdAt.split("T")[0]}
                                     </TableCell>
                                     <TableCell className="w-1/5 px-6 py-4 text-right">
                                         <Popover>
@@ -75,7 +79,7 @@ const CompaniesTable = ({ buttonText = "New Company", buttonPath = "/admin/compa
                                                 </button>
                                             </PopoverTrigger>
                                             <PopoverContent side="left" className="w-40 p-0">
-                                                <button onClick={()=>navigate(`/admin/companies/${company._id}`)} className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
+                                                <button onClick={() => navigate(`/admin/jobs/${job._id}`)} className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
                                                     <Edit2 className="h-4 w-4" />
                                                     <span>Edit</span>
                                                 </button>
@@ -92,4 +96,4 @@ const CompaniesTable = ({ buttonText = "New Company", buttonPath = "/admin/compa
     )
 }
 
-export default CompaniesTable
+export default AdminJobsTable
