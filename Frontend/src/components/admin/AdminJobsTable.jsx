@@ -69,7 +69,7 @@ const AdminJobsTable = ({ buttonText = "New Company", buttonPath = "/admin/compa
                                         {job?.title}
                                     </TableCell>
                                     <TableCell className="w-1/5 px-6 py-4 text-sm text-gray-600">
-                                        {job?.createdAt.split("T")[0]}
+                                        {job?.createdAt?.split("T")[0]}
                                     </TableCell>
                                     <TableCell className="w-1/5 px-6 py-4 text-right">
                                         <Popover>
