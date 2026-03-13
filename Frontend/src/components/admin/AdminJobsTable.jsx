@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
+import { Eye } from 'lucide-react'
 
 
 const AdminJobsTable = ({ buttonText = "New Company", buttonPath = "/admin/companies/create" }) => {
@@ -16,8 +17,9 @@ const AdminJobsTable = ({ buttonText = "New Company", buttonPath = "/admin/compa
     const [filterText, setFilterText] = useState('');
     const navigate = useNavigate();
 
-    const filteredCompanies = allAdminJobs.filter(job =>
-        job.title.toLowerCase().includes(filterText.toLowerCase())
+    const filteredJobs = allAdminJobs.filter(job =>
+        (job.title && job.title.toLowerCase().includes(filterText.toLowerCase())) ||
+        (job.company?.name && job.company.name.toLowerCase().includes(filterText.toLowerCase()))
     );
 
     return (
@@ -26,7 +28,7 @@ const AdminJobsTable = ({ buttonText = "New Company", buttonPath = "/admin/compa
             <div className="flex justify-between items-center mb-6">
                 <div className="flex-1 max-w-xs">
                     <Input
-                        placeholder="Filter by name"
+                        placeholder="Filter by name and role"
                         value={filterText}
                         onChange={(e) => setFilterText(e.target.value)}
                         className="h-10 border-gray-300"
@@ -50,14 +52,14 @@ const AdminJobsTable = ({ buttonText = "New Company", buttonPath = "/admin/compa
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {filteredCompanies.length <= 0 ? (
+                        {filteredJobs.length <= 0 ? (
                             <TableRow className="hover:bg-gray-50">
                                 <TableCell colSpan="4" className="text-center py-12 text-red-500 text-sm">
                                     You haven't posted any jobs yet.
                                 </TableCell>
                             </TableRow>
                         ) : (
-                            filteredCompanies?.map((job) => (
+                            filteredJobs?.map((job) => (
                                 <TableRow key={job._id} className="border-b border-gray-200 hover:bg-gray-50 transition-colors">
                                     {/*<TableCell className="w-1/5 px-6 py-4">
                                         <img src={company.logo} alt={company.name} className="h-12 w-12 rounded-full object-cover" />
@@ -79,10 +81,14 @@ const AdminJobsTable = ({ buttonText = "New Company", buttonPath = "/admin/compa
                                                 </button>
                                             </PopoverTrigger>
                                             <PopoverContent side="left" className="w-40 p-0">
-                                                <button onClick={() => navigate(`/admin/jobs/${job._id}`)} className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
+                                                <div onClick={() => navigate(`/admin/jobs/${job._id}`)} className="w-full flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
                                                     <Edit2 className="h-4 w-4" />
                                                     <span>Edit</span>
-                                                </button>
+                                                </div>
+                                                <div onClick={()=>navigate(`/admin/jobs/${job._id}/applicants`)} className='w-full flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors'>
+                                                    <Eye className='w-4'/>
+                                                    <span>Applicants</span>
+                                                </div>
                                             </PopoverContent>
                                         </Popover>
                                     </TableCell>

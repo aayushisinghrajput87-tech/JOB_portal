@@ -3,9 +3,11 @@ export const postJob=async(req,res)=>{
     try{
         const {title,description,requirements,salary,location,jobType,experience,position,companyId}=req.body;
         const userId=req.id;
-        if(!title || !description || !requirements || !salary || !location || !jobType || !experience || !position || !companyId){
+        // Highlighted: Validate and convert salary
+        const salaryNum = Number(salary);
+        if(!title || !description || !requirements || !salary || isNaN(salaryNum) || !location || !jobType || !experience || !position || !companyId){
             return res.status(400).json({
-                message:"Something is missing.",
+                message:"Something is missing or salary is not a valid number.",
                 success:false
             })
         };
@@ -13,7 +15,7 @@ export const postJob=async(req,res)=>{
             title,
             description,
             requirements:requirements.split(","),
-            salary:Number(salary),
+            salary: salaryNum,
             location,
             jobType,
             experienceLevel:experience,

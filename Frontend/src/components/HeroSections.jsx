@@ -1,17 +1,28 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { Button } from './ui/button';
 import { Search } from 'lucide-react';
+import {useDispatch} from 'react-redux';
+import { setSearchQuery } from '../redux/jobSlice';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
+    const [query,setQuery] = React.useState("");
+    const dispatch=useDispatch();
+    const navigate=useNavigate();
+    const searchJobHandler=()=>{
+        dispatch(setSearchQuery(query));
+        navigate("/browse");
+    }
+
     return (
         <div className='text-center'>
             <div className='flex flex-col gap-5 my-10'>
-            <span className='mx-auto px-4 py-2 rounded-full bg-gray-100 text-[#F83002] font-medium'>No. 1 Job Hunt Website</span>
+            <span className='mx-auto px-4 py-2 rounded-full bg-gray-100 text-[#F83002] font-medium'>Gateway to your professional future</span>
             <h1 className='text-5xl font-bold'>Search,Apply & <br/>Get Your <span className='text-[#6A38C2]'>Dream Jobs</span></h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam asperiores reiciendis facilis vero amet culpa? Officia distinctio, maxime maiores laudantium eligendi tempora eaque molestias labore, dignissimos suscipit, praesentium beatae aliquam?</p>
+            <p className='text-gray-500 max-w-2xl mx-auto text-lg leading-relaxed'>Discover your potential.Search thousands of openings from top-tier startups to fortune 500 companies.Your dream job is waiting.</p>
             <div className='flex w-[40%] shadow-lg border border-gray-200 pl-3 rounded-full items-center gap-4 mx-auto'>
-                <input type="text" placeholder='Find your dream jobs' className='outline-none border-none w-full'/>
-                <Button className="rounded-r-full bg-[#6A38C2]">
+                <input type="text" placeholder='Find your dream jobs' onChange={(e) => setQuery(e.target.value)} className='outline-none border-none w-full'/>
+                <Button onClick={searchJobHandler} className="rounded-r-full bg-[#6A38C2]">
                     <Search className='h-5 w-5'/>
                 </Button>
             </div>

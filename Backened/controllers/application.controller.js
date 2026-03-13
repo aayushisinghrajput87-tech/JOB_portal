@@ -68,27 +68,31 @@ export const getAppliedJobs=async(req,res)=>{
 }
 //admin dekhega kitna user ne apply kiya hai
 export const getApplicants=async(req,res)=>{
-    try{
-        const jobId=req.params.id;
-        const jobData=await job.findById(jobId).populate({
-            path:'applications',
-            options:{sort:{createdAt:-1}},
-            populate:{
-                path:'applicant'
+    try {
+        const jobId = req.params.id;
+        const jobData = await job.findById(jobId).populate({
+            path: 'applications',
+            options: { sort: { createdAt: -1 } },
+            populate: {
+                path: 'applicant',
+                select: 'fullname email phoneNumber profile.resume' // Correct field names
             }
-    });
-    if(!jobData){
-        return res.status(404).json({
-            message:'Job not found.',
-            success:false
-        })
-    };
-    return res.status(200).json({
-        job:jobData,
-        success:true
-    });
-    }catch(error){
+        });
+        if (!jobData) {
+            return res.status(404).json({
+                message: 'Job not found.',
+                success: false
+            });
+        }
+        // Debug: log applicants array
+        console.log('Applicants:', jobData.applications);
+        return res.status(200).json({
+            applicants: jobData.applications,
+            success: true
+        });
+    } catch (error) {
         console.log(error);
+        res.status(500).json({ message: 'Server error', success: false });
     }
 }
 export const updateStatus=async(req,res)=>{

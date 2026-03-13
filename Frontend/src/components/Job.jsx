@@ -28,7 +28,7 @@ const Job = ({job}) => {
       {/* LOGO + COMPANY */}
       <div className="flex items-center gap-3 mt-4">
         <Avatar className="h-12 w-12">
-          <AvatarImage src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ584acfWMPuHP7nRm1z5_Yt5zLmKyGrANsQ&s" />
+          <AvatarImage src={job?.company?.logo} />
         </Avatar>
 
         <div>

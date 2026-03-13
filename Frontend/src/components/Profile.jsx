@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { use, useState } from 'react'
 import Navbar from './shared/Navbar'
 import { Avatar, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
@@ -8,11 +8,13 @@ import { Label } from './ui/label'
 import AppliedJobsTable from './AppliedJobsTable'
 import UpdateProfileDialog from './UpdateProfileDialog'
 import { useSelector } from 'react-redux'
+import useGetAppliedJobs from '@/hooks/useGetAppliedJobs'
 
 
 
 //const skills = ["Html", "Css", "Javascript", "Reactjs"];
 const Profile = () => {
+    useGetAppliedJobs();
     const [open,setOpen]=useState(false);
     const [isResume, setIsResume] = useState(true);
     const {user}=useSelector(store=>store.auth);

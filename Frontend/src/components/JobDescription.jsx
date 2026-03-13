@@ -103,7 +103,11 @@ const JobDescription = () => {
         <p><span className="font-semibold">Experience:</span>{singleJob?.experience} years</p>
         <p><span className="font-semibold">Salary:</span>{singleJob?.salary}LPA</p>
         <p><span className="font-semibold">Total Applicants:</span> {singleJob?.applications?.length}</p>
-        <p><span className="font-semibold">Posted Date:</span>{singleJob?.createdAt.split('T')[0]}</p>
+          {/* HIGHLIGHTED FIX: Prevent .split error if createdAt is undefined */}
+          <p>
+            <span className="font-semibold">Posted Date:</span>
+            {singleJob?.createdAt ? singleJob.createdAt.split('T')[0] : 'N/A'}
+          </p>
 
         <p className="pt-2">
           <span className="font-semibold">Description:</span>{' '}

@@ -9,9 +9,10 @@ import { useNavigate } from 'react-router-dom'
 import axios from "axios"
 import { USER_API_END_POINT } from "../../utils/constant"
 import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 import {Loader2} from "lucide-react"
 import {setLoading} from '../../redux/authSlice'
+import { useEffect } from 'react';
 
 const Signup = () => {
 
@@ -23,7 +24,7 @@ const Signup = () => {
         role: "",
         file: ""
     });
-    const {loading}=useSelector(store=>store.auth);
+    const {loading,user}=useSelector(store=>store.auth);
     const dispatch=useDispatch();
     const navigate = useNavigate();
 
@@ -63,6 +64,13 @@ const Signup = () => {
             dispatch(setLoading(false));
         }
     }
+
+    useEffect(()=>{
+            if(user){
+                navigate("/");
+            }
+        },[])
+
     return (
         <div>
             <Navbar />

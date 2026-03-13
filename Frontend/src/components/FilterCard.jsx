@@ -1,6 +1,11 @@
 import React from "react";
+import "./FilterCard.css";
 import { Label } from "./ui/label";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+// FIX: Use correct relative import for setSearchQuery
+import { setSearchQuery } from "../redux/jobSlice";
 
 
 const filterData=[
@@ -19,11 +24,33 @@ const filterData=[
 ];
 
 const FilterCard=()=>{
+    const [selectedValue, setSelectedValue] = React.useState("");
+    const dispatch=useDispatch();
+    const ChangeHandler = (value) => {
+        setSelectedValue(value);
+    };
+
+        // FIX: Use correct action name and import
+        useEffect(()=>{
+            dispatch(setSearchQuery(selectedValue));
+        },[selectedValue,dispatch]);
+
+    // Custom style for rounded filter circles with white gap
+    const circleStyle = {
+      width: '24px',
+      height: '24px',
+      borderRadius: '100%',
+      background: '#fff',
+      border: '2px solid #000',
+      display: 'inline-block',
+      marginRight: '8px',
+    };
+
     return (
         <div className="w-full bg-white p-3 rounded-md">
             <h1 className="text-lg">Filter Jobs</h1>
             <hr className="mt-3"/>
-            <RadioGroup>
+            <RadioGroup onValueChange={ChangeHandler} className="w-full" value={selectedValue}>
                 {
                     filterData.map((data,index)=>(
                         <div key={index} className="mt-6">
@@ -31,11 +58,13 @@ const FilterCard=()=>{
                                 {data.filterType}
                             </h1>
                             {
-                                data.array.map((item,index)=>{
+                                data.array.map((item,idx)=>{
+                                      const itemId=`id${index}-${idx}`
                                     return (
-                                        <div key={index} className="flex items-center space-x-3 my-2">
-                                            <RadioGroupItem value={item} id={`${data.filterType}-${index}`} className="h-4 w-4"/>
-                                            <Label htmlFor={`${data.filterType}-${index}`}>{item}</Label>
+                                        <div key={itemId} className="flex items-center space-x-3 my-2">
+                                            {/* Highlighted: Custom circle style for filter */}
+                                            <RadioGroupItem value={item} id={itemId} className="pure-circle-radio" />
+                                            <Label htmlFor={itemId}>{item}</Label>
                                         </div>    
                                     )
                                 })
