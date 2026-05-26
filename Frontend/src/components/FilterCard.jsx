@@ -47,14 +47,14 @@ const FilterCard=()=>{
     };
 
     return (
-        <div className="w-full bg-white p-3 rounded-md">
-            <h1 className="text-lg">Filter Jobs</h1>
-            <hr className="mt-3"/>
+        <div className="w-full bg-gradient-to-br from-white via-blue-50 to-pink-50 p-5 rounded-2xl shadow-xl border border-gray-100">
+            <h1 className="text-2xl font-extrabold text-indigo-700 mb-2">Filter Jobs</h1>
+            <hr className="mt-2 mb-4 border-indigo-100"/>
             <RadioGroup onValueChange={ChangeHandler} className="w-full" value={selectedValue}>
                 {
                     filterData.map((data,index)=>(
                         <div key={index} className="mt-6">
-                            <h1 className="font-bold text-2xl mb-3">
+                            <h1 className="font-bold text-lg text-teal-700 mb-3">
                                 {data.filterType}
                             </h1>
                             {
@@ -62,9 +62,8 @@ const FilterCard=()=>{
                                       const itemId=`id${index}-${idx}`
                                     return (
                                         <div key={itemId} className="flex items-center space-x-3 my-2">
-                                            {/* Highlighted: Custom circle style for filter */}
                                             <RadioGroupItem value={item} id={itemId} className="pure-circle-radio" />
-                                            <Label htmlFor={itemId}>{item}</Label>
+                                            <Label htmlFor={itemId} className="text-base text-gray-700 hover:text-indigo-600 cursor-pointer transition-colors font-medium">{item}</Label>
                                         </div>    
                                     )
                                 })
@@ -73,7 +72,7 @@ const FilterCard=()=>{
                     ))
                 }
             </RadioGroup>
-            </div>
+        </div>
     );
 };
 

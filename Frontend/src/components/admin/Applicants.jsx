@@ -29,11 +29,13 @@ const Applicants=()=>{
         fetchAllApplicants();
     },[params.id, dispatch]);
     return (
-        <div>
+        <div className="min-h-screen w-full bg-gradient-to-br from-blue-400 via-blue-200 to-blue-100 flex flex-col">
             <Navbar/>
-            <div className='max-w-7xl mx-auto'>
-                <h1 className='font-bold text-xl my-5'>Applicants {applicants.length || 0}</h1>
-                <ApplicantsTable applicants={applicants}/>
+            <div className='flex-1 flex flex-col items-center justify-start'>
+                <div className='w-full max-w-7xl mt-8'>
+                    <h1 className='font-extrabold text-3xl md:text-4xl my-8 text-gray-900'>Applicants {applicants.length || 0}</h1>
+                    <ApplicantsTable applicants={applicants}/>
+                </div>
             </div>
         </div>
     )

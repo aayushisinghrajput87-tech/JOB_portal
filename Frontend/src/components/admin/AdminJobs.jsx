@@ -6,10 +6,12 @@ import useGetAllAdminJobs from '@/hooks/useGetAllAdminJobs';
 const AdminJobs=()=>{
     useGetAllAdminJobs();
     return (
-        <div>
+        <div className="min-h-screen w-full bg-gradient-to-br from-blue-400 via-blue-200 to-blue-100 flex flex-col">
             <Navbar />
-            <div className='max-w-6xl mx-auto my-10'>
-                <AdminJobsTable buttonText="New Jobs" buttonPath="/admin/jobs/create"/>
+            <div className='flex-1 flex flex-col items-center justify-start'>
+                <div className='w-full max-w-6xl mt-10'>
+                    <AdminJobsTable buttonText="New Jobs" buttonPath="/admin/jobs/create"/>
+                </div>
             </div>
         </div>
     )

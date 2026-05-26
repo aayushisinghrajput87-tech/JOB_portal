@@ -26,7 +26,7 @@ const AppliedJobTable = () => {
                                 <TableCell>{application.job?.company?.name || 'N/A'}</TableCell>
                                     <TableCell className="text-right"><Badge className={`${application.status==="rejected" ? 'bg-red-400' : 'bg-green-400'}`}>{application.status.toUpperCase() || 'N/A'}</Badge></TableCell>
                             </TableRow>
-                        ))
+                        )) 
                     ) : (
                         <TableRow>
                             <TableCell colSpan={4} className="text-center">No applied jobs found.</TableCell>

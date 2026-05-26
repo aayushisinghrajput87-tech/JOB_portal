@@ -88,10 +88,10 @@ const CompanySetup = () => {
     },[singleCompany]);
 
     return (
-        <div>
+        <div className="min-h-screen w-full bg-gradient-to-br from-blue-400 via-blue-200 to-blue-100 flex flex-col">
             <Navbar />
-            <div className='max-w-2xl mx-auto py-16 px-4 sm:px-6 lg:px-8'>
-                <form onSubmit={submitHandler} className='bg-white rounded-lg shadow-sm p-8'>
+            <div className='flex-1 flex items-center justify-center'>
+                <form onSubmit={submitHandler} className='w-full max-w-2xl bg-white/90 rounded-3xl shadow-2xl p-8 border border-gray-200'>
                     {/* Header Section */}
                     <div className='flex items-center gap-4 mb-8 pb-6 border-b border-gray-200'>
                         <div onClick={()=>navigate("/admin/companies")} className='flex items-center gap-2 cursor-pointer hover:opacity-80 transition'>

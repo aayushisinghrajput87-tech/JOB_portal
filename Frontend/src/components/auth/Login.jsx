@@ -58,37 +58,43 @@ const Login = () => {
         }
     },[])
     return (
-        <div>
+        <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-pink-50 to-yellow-50">
             <Navbar />
-            <div className='flex items-center justify-center max-w-7xl mx-auto'>
-                <form onSubmit={submitHandler} className='w-1/2 border border-gray-200 rounded-md p-4 my-10'>
-                    <h1 className='font-bold text-xl mb-5'>Login</h1>
-                    <div className='my-2'>
-                        <Label>Email</Label>
-                        <Input type="email" placeholder="aayushi34@gmail.com" value={input.email} name="email" onChange={changeEventHandler} />
+            <div className='flex items-center justify-center min-h-[80vh]'>
+                <form onSubmit={submitHandler} className='w-full max-w-md bg-white/90 border border-gray-200 rounded-2xl shadow-xl p-8 my-10'>
+                    <h1 className='font-extrabold text-3xl mb-7 text-gray-900 text-center tracking-tight drop-shadow'>Login</h1>
+                    <div className='my-4'>
+                        <Label className="text-base font-semibold">Email</Label>
+                        <Input type="email" placeholder="aayushi34@gmail.com" value={input.email} name="email" onChange={changeEventHandler} className="mt-1 bg-gray-100 focus:bg-white focus:ring-2 focus:ring-indigo-300" />
                     </div>
-                    <div className='my-2'>
-                        <Label>Password</Label>
-                        <Input type="password" placeholder="****" value={input.password} name="password" onChange={changeEventHandler}/>
+                    <div className='my-4'>
+                        <Label className="text-base font-semibold">Password</Label>
+                        <Input type="password" placeholder="****" value={input.password} name="password" onChange={changeEventHandler} className="mt-1 bg-gray-100 focus:bg-white focus:ring-2 focus:ring-indigo-300"/>
                     </div>
-                    <div className='flex items-center justify-between'>
-                        <RadioGroup className="flex items-center gap-4 my-5">
+                    <div className='flex items-center justify-center'>
+                        <RadioGroup className="flex items-center gap-8 my-5">
                             <div className="flex items-center space-x-2">
-                            <Input type="radio" name="role" value="student" checked={input.role==='student'} onChange={changeEventHandler} className="cursor-pointer"/>
-                                <Label htmlFor="r1">Student</Label>
+                                <Input type="radio" name="role" value="student" checked={input.role==='student'} onChange={changeEventHandler} className="cursor-pointer accent-indigo-500"/>
+                                <Label htmlFor="r1" className="text-base">Student</Label>
                             </div>
                             <div className="flex items-center space-x-2">
-                                 <Input type="radio" name="role" value="recruiter" checked={input.role==='recruiter'} onChange={changeEventHandler} className="cursor-pointer"/>
-                                <Label htmlFor="r2">Recruiter</Label>
+                                <Input type="radio" name="role" value="recruiter" checked={input.role==='recruiter'} onChange={changeEventHandler} className="cursor-pointer accent-pink-500"/>
+                                <Label htmlFor="r2" className="text-base">Recruiter</Label>
                             </div>
                         </RadioGroup>
                     </div>
                     {
-
-                        loading?<Button className="w-full my-4"><Loader2 className='mr-2 h-4 w-4 animate-spin'/>
-                     Please wait </Button>: <Button type="submit" className="w-full my-4">Login</Button>
+                        loading ?
+                        <Button className="w-full my-4 bg-gradient-to-r from-indigo-400 to-pink-400 text-white font-bold shadow-md" disabled>
+                            <Loader2 className='mr-2 h-4 w-4 animate-spin'/>
+                            Please wait
+                        </Button>
+                        :
+                        <Button type="submit" className="w-full my-4 bg-gradient-to-r from-indigo-500 to-pink-400 text-white font-bold shadow-md hover:from-pink-400 hover:to-indigo-500 border-0">
+                            Login
+                        </Button>
                     }
-                    <span className='text-sm'> Don't have an account? <Link to="/signup" className='text-blue-600'>Signup</Link></span>
+                    <span className='text-sm block text-center mt-2'> Don't have an account? <Link to="/signup" className='text-indigo-600 font-semibold hover:underline'>Signup</Link></span>
                 </form>
             </div>
         </div>

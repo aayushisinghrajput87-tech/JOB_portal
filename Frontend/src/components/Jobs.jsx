@@ -19,7 +19,7 @@ const Jobs = () => {
       const filteredJobs = allJobs.filter((job) => {
         return (
           (job.title?.toLowerCase() || "").includes(searchedQuery.toLowerCase()) ||
-          (job.description?.toLowerCase() || "").includes(searchedQuery.toLowerCase()) ||
+         // (job.description?.toLowerCase() || "").includes(searchedQuery.toLowerCase()) ||
           (job.location?.toLowerCase() || "").includes(searchedQuery.toLowerCase()) ||
           (job.salary?.toString().toLowerCase() || "").includes(searchedQuery.toLowerCase())
         );
@@ -31,15 +31,17 @@ const Jobs = () => {
   }, [searchedQuery, allJobs]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-pink-50 to-yellow-50">
       <Navbar />
 
       <div className="max-w-7xl mx-auto mt-8 px-6">
   <div className='flex gap-6'>
 
     {/* LEFT FILTER */}
-    <aside className='w-[20%]'>
-      <FilterCard />
+    <aside className='w-[22%]'>
+      <div className="sticky top-8">
+        <FilterCard />
+      </div>
     </aside>
 
     {/* RIGHT JOBS */}

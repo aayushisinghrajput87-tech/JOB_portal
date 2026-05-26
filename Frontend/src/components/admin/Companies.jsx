@@ -6,7 +6,7 @@ import useGetAllCompanies from '@/hooks/useGetAllCompanies';
 const Companies=()=>{
     useGetAllCompanies();
     return (
-        <div>
+        <div className="min-h-screen bg-pink-200">
             <Navbar />
             <div className='max-w-6xl mx-auto my-10'>
                 <CompaniesTable/>

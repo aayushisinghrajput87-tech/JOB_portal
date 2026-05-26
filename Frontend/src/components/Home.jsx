@@ -19,12 +19,12 @@ const Home=()=>{
         }
     },[]);
     return ( 
-        <div>
+        <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-50">
             <Navbar/>
             <HeroSection/>
-           <CategoryCarousel/>
-           <LatestJobs/>
-         <Footer/>
+            <CategoryCarousel/>
+            <LatestJobs/>
+            <Footer/>
         </div>
     )
 }

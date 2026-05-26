@@ -20,7 +20,7 @@ const Profile = () => {
     const {user}=useSelector(store=>store.auth);
 
     return (
-        <div className="bg-white min-h-screen">
+        <div className="min-h-screen w-full bg-gradient-to-br from-pink-200 via-pink-100 to-pink-300">
             <Navbar />
             
             <div className='max-w-4xl mx-auto px-4 my-5'>
@@ -89,9 +89,9 @@ const Profile = () => {
                 </div>
 
                 {/* --- APPLIED JOBS SECTION --- */}
-                <div className='mt-8 bg-white'>
+                <div className='mt-8 bg-white w-full'>
                     {/* Fixed: Font size increased to match visual hierarchy */}
-                    <h1 className='font-bold text-xl mb-5'>Applied Jobs</h1>
+                    <h1 className='font-bold text-xl mb-5 mx-auto ml-4 mt-2'> Applied Jobs</h1>
                     <AppliedJobsTable />
                 </div>
             <UpdateProfileDialog open={open} setOpen={setOpen}/>

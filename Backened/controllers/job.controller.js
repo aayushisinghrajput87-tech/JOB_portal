@@ -1,3 +1,58 @@
+// Update Job
+export const updateJob = async (req, res) => {
+    try {
+        const jobId = req.params.id;
+        const {
+            title,
+            description,
+            requirements,
+            salary,
+            location,
+            jobType,
+            experience,
+            position
+        } = req.body;
+
+        // Validate required fields
+        if (!title || !description || !requirements || !salary || !location || !jobType || !experience || !position) {
+            return res.status(400).json({
+                message: "Missing required fields.",
+                success: false
+            });
+        }
+
+        // Prepare update object
+        const update = {
+            title,
+            description,
+            requirements: Array.isArray(requirements) ? requirements : requirements.split(','),
+            salary: Number(salary),
+            location,
+            jobType,
+            experienceLevel: experience,
+            position: Number(position)
+        };
+
+        const updatedJob = await Job.findByIdAndUpdate(jobId, update, { new: true });
+        if (!updatedJob) {
+            return res.status(404).json({
+                message: "Job not found.",
+                success: false
+            });
+        }
+        return res.status(200).json({
+            message: "Job updated successfully.",
+            job: updatedJob,
+            success: true
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Failed to update job.",
+            success: false
+        });
+    }
+};
 import {job as Job} from "../models/job.model.js";
 export const postJob=async(req,res)=>{
     try{

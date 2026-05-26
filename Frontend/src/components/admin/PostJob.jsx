@@ -66,11 +66,11 @@ const PostJob = () => {
     }
 
     return (
-        <div>
+        <div className="min-h-screen w-full bg-gradient-to-br from-blue-400 via-blue-200 to-blue-100 flex flex-col">
             <Navbar />
-            <div className='flex items-center justify-center w-screen my-5'>
-                <form  onSubmit={submitHandler} action="" className='p-8 max-w-4xl border border-gray-200 shadow-lg rounded-md'>
-                <div className='grid grid-cols-2 gap-2'>
+            <div className='flex-1 flex items-center justify-center'>
+                <form  onSubmit={submitHandler} action="" className='p-10 max-w-2xl w-full border border-gray-200 shadow-2xl rounded-2xl bg-white/90'>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-6'>
                     <div>
                         <Label>Title</Label>
                         <Input type="text" name="title" value={input.title} onChange={changeEventHandler} className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1" />
