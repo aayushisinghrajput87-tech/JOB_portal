@@ -10,7 +10,7 @@ import applicationRoute from "./routes/application.route.js";
 dotenv.config({}); 
 const app=express();
 const corsOptions ={
-    origin:'http://localhost:5173',
+    origin:'https://job-portal-sigma-ruby.vercel.app',
     credentials:true,
 };
 app.use(cors(corsOptions));
