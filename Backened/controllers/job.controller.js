@@ -33,7 +33,7 @@ export const updateJob = async (req, res) => {
             position: Number(position)
         };
 
-        const updatedJob = await Job.findByIdAndUpdate(jobId, update, { new: true });
+        const updatedJob = await Job.findByIdAndUpdate(jobId, update, { new: true }).populate('company');
         if (!updatedJob) {
             return res.status(404).json({
                 message: "Job not found.",

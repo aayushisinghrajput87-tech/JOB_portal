@@ -9,9 +9,23 @@ import jobRoute from "./routes/job.route.js";
 import applicationRoute from "./routes/application.route.js";
 dotenv.config({}); 
 const app=express();
-const corsOptions ={
-    origin:'http://localhost:5173',
-    credentials:true,
+const allowedOrigins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+   // "https://job-portal-sigma-ruby.vercel.app",
+    ...(process.env.ALLOWED_ORIGINS?.split(",").map((o) => o.trim()) ?? []),
+    process.env.FRONTEND_URL,
+].filter(Boolean);
+
+const corsOptions = {
+    origin(origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(null, false);
+        }
+    },
+    credentials: true,
 };
 app.use(cors(corsOptions));
 //app.use("/api/application",applicationRoute);

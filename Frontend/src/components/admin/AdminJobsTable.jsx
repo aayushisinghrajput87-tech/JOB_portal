@@ -4,16 +4,19 @@ import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { MoreHorizontal } from 'lucide-react'
 import { Popover, PopoverTrigger, PopoverContent } from '../ui/popover'
 import { Edit2 } from 'lucide-react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { Eye } from 'lucide-react'
+import { JOB_API_END_POINT } from '../../utils/constant'
+import { setAllAdminJobs } from '../../redux/jobSlice'
 
 
 const AdminJobsTable = ({ buttonText = "New Company", buttonPath = "/admin/companies/create" }) => {
     const { companies = [] } = useSelector(store => store.company);
-    const {allAdminJobs=[]}=useSelector(store=>store.job);
+    const { allAdminJobs = [] } = useSelector(store => store.job);
+    const dispatch = useDispatch();
     const [filterText, setFilterText] = useState('');
     const navigate = useNavigate();
 
@@ -59,7 +62,7 @@ const AdminJobsTable = ({ buttonText = "New Company", buttonPath = "/admin/compa
                 ...editInput,
                 experienceLevel: editInput.experience,
             };
-            const res = await fetch(`/api/job/update/${id}`, {
+            const res = await fetch(`${JOB_API_END_POINT}/update/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),
@@ -67,9 +70,9 @@ const AdminJobsTable = ({ buttonText = "New Company", buttonPath = "/admin/compa
             });
             const data = await res.json();
             if (data.success) {
+                dispatch(setAllAdminJobs(allAdminJobs.map((job) => job._id === id ? data.job : job)));
                 alert('Job updated successfully');
                 closeEditModal();
-                // Optionally: refresh jobs list here
             } else {
                 alert(data.message || 'Failed to update job');
             }
