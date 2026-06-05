@@ -12,7 +12,7 @@ const app=express();
 const allowedOrigins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-   // "https://job-portal-sigma-ruby.vercel.app",
+    "https://job-portal-sigma-ruby.vercel.app",
     ...(process.env.ALLOWED_ORIGINS?.split(",").map((o) => o.trim()) ?? []),
     process.env.FRONTEND_URL,
 ].filter(Boolean);
